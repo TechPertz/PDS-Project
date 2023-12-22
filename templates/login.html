@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background: #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 20px 20px 60px #bebebe,
+                        -20px -20px 60px #ffffff;
+            padding: 40px;
+            width: 300px;
+        }
+
+        h1 {
+            color: #555;
+            margin-bottom: 24px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            background: #e0e0e0;
+            border: none;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 50px;
+            box-shadow: inset 8px 8px 8px #bebebe,
+                        inset -8px -8px 8px #ffffff;
+            transition: all 0.2s ease-in-out;
+        }
+
+        input:focus {
+            background: #e0e0e0;
+            box-shadow: inset 4px 4px 6px #bebebe,
+                        inset -4px -4px 6px #ffffff;
+            outline: none;
+        }
+
+        button {
+            background: #e0e0e0;
+            border: none;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 50px;
+            box-shadow: 5px 5px 10px #bebebe,
+                        -5px -5px 10px #ffffff;
+            color: #555;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        button:hover {
+            box-shadow: none;
+        }
+
+        .error-message {
+            color: #ff3860;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+        <form method="POST" action="">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                {{ form.username(class="neumorphic-input") }}
+            </div>
+            <div class="form-group">
+                {{ form.password(class="neumorphic-input") }}
+            </div>
+            {{ form.submit(class="neumorphic-button") }}
+        </form>
+    </div>
+</body>
+</html>

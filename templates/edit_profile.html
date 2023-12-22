@@ -1,0 +1,59 @@
+<!-- Inside templates/edit_profile.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4" style="text-align: center;">Edit Profile</h1>
+
+    <form method="POST" action="" style="max-width: 300px; margin: auto;">
+        {{ form.csrf_token }}
+
+        <div class="form-group mb-3">
+            {{ form.name(placeholder=form.name.label.text, class="neumorphic-input form-control") }}
+        </div>
+        <div class="form-group mb-4">
+            {{ form.billing_address_id(placeholder=form.billing_address_id.label.text, class="neumorphic-input form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary neumorphic-button w-100">Save Changes</button>
+    </form>
+</div>
+
+<style>
+    .neumorphic-input {
+        background: #e0e0e0;
+        border: none;
+        padding: 10px 15px;
+        margin-bottom: 15px;
+        border-radius: 20px;
+        box-shadow: 8px 8px 15px #bebebe, -8px -8px 15px #ffffff;
+        font-size: 16px;
+    }
+
+    .neumorphic-input:focus {
+        background: #e0e0e0;
+        box-shadow: inset 4px 4px 6px #bebebe, inset -4px -4px 6px #ffffff;
+        outline: none;
+    }
+
+    .neumorphic-button {
+        background: #e0e0e0;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 20px;
+        box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+        color: #555;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .neumorphic-button:hover {
+        box-shadow: none;
+    }
+
+    ::placeholder {
+        color: #aaa;
+    }
+</style>
+{% endblock %}

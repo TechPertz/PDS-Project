@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e8f0fe;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #333;
+            flex-direction: column;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 250px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #0b5394;
+            margin-bottom: 40px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .tagline {
+            font-style: italic;
+            color: #6a6a6a;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    {% if current_user %}
+        <h1>Welcome back, {{ current_user.name }}</h1>
+        <div class="container">
+            <div class="card">
+                <h2>View Profile</h2>
+                <p>Access your user profile</p>
+                <a href="{{ url_for('profile') }}">Profile</a>
+            </div>
+            <div class="card">
+                <h2>Edit Profile</h2>
+                <p>Make changes to your profile</p>
+                <a href="{{ url_for('edit_profile') }}">Edit Profile</a>
+            </div>
+            <div class="card">
+                <h2>Logout</h2>
+                <p>Sign out of your account</p>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </div>
+        </div>
+    {% else %}
+        <h1>Welcome to the Energy Monitoring System!</h1>
+        <p class="tagline">Monitor and manage your energy consumption efficiently.</p>
+        <div class="container">
+            <div class="card">
+                <h2>Login</h2>
+                <p>Access your account</p>
+                <a href="{{ url_for('login') }}">Login</a>
+            </div>
+            <div class="card">
+                <h2>Register</h2>
+                <p>Create a new account</p>
+                <a href="{{ url_for('register') }}">Register</a>
+            </div>
+        </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!-- Inside templates/profile.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="mb-4 text-center">
+        <h2 class="display-4">User Profile</h2>
+        <p>Welcome, {{ user.name }}</p>
+    </div>
+
+     <!-- User Details and Energy Pricing Section -->
+     <div class="row mb-4">
+        <!-- User Details Card -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">Profile Details</h3>
+                    <p><strong>Name:</strong> {{ user.name }}</p>
+                    <p><strong>Billing Address ID:</strong> {{ user.billing_address_id }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Energy Pricing Card -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">Check Energy Pricing by ZIP Code</h3>
+                    <form method="GET" action="{{ url_for('energy_price_zipcode') }}">
+                        <div class="form-group">
+                            <label for="zipCodeDropdown">Select ZIP Code:</label>
+                            <select class="form-control" id="zipCodeDropdown" name="zip_code">
+                                {% for zip_code in all_zip_codes %}
+                                    <option value="{{ zip_code }}">{{ zip_code }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Locations Section -->
+<div class="row">
+    {% for service_location in user.service_locations %}
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ service_location.address }}</h5>
+                    <div class="d-flex flex-wrap justify-content-center align-items-center">
+                        <a href="{{ url_for('edit_service_location', location_id=service_location.id) }}" class="btn btn-warning btn-sm m-1">Edit</a>
+                        <a href="{{ url_for('remove_service_location', location_id=service_location.id) }}" class="btn btn-danger btn-sm m-1">Remove</a>
+                        <a href="{{ url_for('device_energy_consumption', service_location_id=service_location.id) }}" class="btn btn-info btn-sm m-1">Device Energy Consumption</a>
+                        <a href="{{ url_for('monthly_energy_cost', service_location_id=service_location.id) }}" class="btn btn-info btn-sm m-1">Monthly Energy Cost</a>
+                        <a href="{{ url_for('energy_consumption', service_location_id=service_location.id, time_resolution='day') }}" class="btn btn-success btn-sm m-1">Day</a>
+                        <a href="{{ url_for('energy_consumption', service_location_id=service_location.id, time_resolution='month') }}" class="btn btn-secondary btn-sm m-1">Month</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted">No service locations found.</p>
+    {% endfor %}
+</div>
+
+<!-- Devices Section -->
+<div class="row">
+    {% for service_location in user.service_locations %}
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ service_location.address }}</h5>
+                    {% if service_location.enrolled_devices %}
+                        {% for enrolled_device in service_location.enrolled_devices %}
+                            <p>
+                                Device: {{ enrolled_device.device_model.type }} - {{ enrolled_device.device_model.model_number }}
+                                <a href="{{ url_for('remove_enrolled_device', device_id=enrolled_device.id) }}" class="btn btn-danger btn-sm ml-2">Remove</a>
+                            </p>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted">No enrolled devices for this location.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted">No devices found for any locations.</p>
+    {% endfor %}
+</div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">Back to Home</a>
+    </div>
+</div>
+{% endblock %}
